@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The Bookmark App">
+    <meta name="author" content="Shashi">
+
+    <title>The Bookmark App</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+	<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+</head>
+<body>
+
+<div class="spinner-wrapper white valign-wrapper" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 999999">
+	<div class="preloader-wrapper active" style="margin: auto;">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="navbar-fixed">
+  <nav class="blue">
+	<div class="nav-wrapper">
+      <a style="font-size: 24px;" class="brand-logo center">Bookmark App</a>
+    </div>
+  </nav>
+</div>
+
+<div class="section valign-wrapper">
+	<div class="row container">
+		<div class="col l4 offset-l4 s12 m12" id="LoginScreen" class="hide">
+			<div id="LoginFormCard" class="card valign z-depth-5"">
+				<div class="card-content" style="text-align: center;padding: 0px">
+					<span style="font-size: 20px" class="card-title">Login</span>
+				</div>
+				<div class="card-action" style="padding: 0px 15px 15px 15px;">
+					<div class="row" style="margin-bottom: 0px">
+					    <form id="LoginForm" class="col s12" style="text-align: center;">
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <input id="LoginEmail" type="text" name="LoginEmail">
+					          <label for="LoginEmail">Email</label>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <input id="LoginPassword" type="password" name="LoginPassword">
+					          <label for="LoginPassword">Password</label>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <button class="btn waves-effect waves-light" id="LoginFormButton" name="LoginFormButton" type="submit">Login</button>
+						          <div id="LoginSpinner" class="hide preloader-wrapper small">
+									    <div class="spinner-layer spinner-blue-only">
+										      <div class="circle-clipper left">
+										        <div class="circle"></div>
+										      </div>
+										     <div class="gap-patch">
+										        <div class="circle"></div>
+										      </div>
+										      <div class="circle-clipper right">
+										        <div class="circle"></div>
+										      </div>
+									    </div>
+								  </div>
+					        </div>
+					      </div>
+					      <p style="text-align: center;margin-top: 5px">Need an account ?<a style="cursor: pointer;margin-right: 0px" onclick="showRegisterForm()"> Sign Up !</a></p>
+					    </form>
+					 </div>
+				</div>
+			</div>
+			<div id="RegisterFormCard" class="hide card valign z-depth-5">
+				<div class="card-content" style="text-align: center;padding: 0px">
+					<span style="font-size: 20px" class="card-title">Register</span>
+				</div>
+				<div class="card-action" style="padding: 0px 15px 15px 15px;">
+					<div class="row" style="margin-bottom: 0px">
+					    <form id="RegisterForm" role="form" class="col s12" style="text-align: center;">
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <input id="RegisterEmail" type="text" name="RegisterEmail">
+					          <label for="RegisterEmail">Email</label>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s6">
+					          <input id="RegisterPassword" type="password" name="RegisterPassword">
+					          <label for="RegisterPassword">Password</label>
+					        </div>
+					        <div class="input-field col s6">
+					          <input id="ConfirmPassword" type="password" name="ConfirmPassword">
+					          <label for="ConfirmPassword">Confirm Password</label>
+					        </div>
+					      </div>
+					      <div class="row" style="margin-bottom: 0px;">
+					        <div class="input-field col s12">
+					          <button class="btn waves-effect waves-light"  type="submit" id="RegisterFormButton" name="RegisterFormButton">Register</button>
+						          <div id="RegisterSpinner" class="hide preloader-wrapper small">
+									    <div class="spinner-layer spinner-blue-only">
+									      <div class="circle-clipper left">
+									        <div class="circle"></div>
+									      </div>
+									     <div class="gap-patch">
+									        <div class="circle"></div>
+									      </div>
+									      <div class="circle-clipper right">
+									        <div class="circle"></div>
+									      </div>
+									    </div>
+									</div>
+					        </div>
+					      </div>
+					      <p style="text-align: center;">Already Signed Up ?<a style="cursor: pointer;margin-right: 0px" onclick="showLoginForm()"> Log In !</a></p>
+					    </form>
+					 </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+
+
+  <!-- Compiled and minified JavaScript -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+
+<script type="text/javascript">
+	$(window).load(function() 
+	{
+		$(".spinner-wrapper").fadeOut("slow");
+	});
+	function showRegisterForm() {
+		$('#LoginFormCard').addClass('hide');
+		$('#RegisterFormCard').removeClass('hide');
+	}
+	function showLoginForm() {
+		$('#RegisterFormCard').addClass('hide');
+		$('#LoginFormCard').removeClass('hide');
+	}
+</script>
+</html>
